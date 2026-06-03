@@ -1,0 +1,65 @@
+---
+title: "ENVS-193DS-spring2026-Final"
+author: "Mila Matich"
+date: "2026-06-09"
+format:
+  pdf:
+    toc: true # use this to display a table of contents
+execute:
+  message: false # use this to make sure messages don't show up
+  warning: false # use this to make sure warnings don't show up
+---
+
+
+
+[Link to my Github repo](https://github.com/themilamatich/ENVS-193DS_spring-2026_final)
+
+# Problem 1: Research Writing 
+
+## a. Transparent statistical methods
+
+## b. Suggestions for rewriting
+
+## c. Further analysis
+
+# Problem 2: Data Analysis
+
+## a. Clean and wrangle 
+
+## b. Response variable 
+
+## c. Purpose of study 
+
+## d. Table of models 
+
+## e. Run the models 
+
+## f. Select the best model 
+
+## g. Check the diagnostics 
+
+## h. Visualize the models predictions 
+
+## i. Write a caption for your figure 
+
+## j. Calculate model predictions 
+
+## k. Interpret your results 
+
+# Problem 3. Affective and exploratory visualizations
+
+## a. Comparing visualizations
+
+## b. Designing an analysis
+
+## c. Check any assumptions and run your analysis
+
+## d. Create a visualization
+
+## e. Write a caption 
+
+## f. Write about your results 
+
+## g. Sharing your affective visualization 
+
+
