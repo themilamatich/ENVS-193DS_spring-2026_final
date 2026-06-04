@@ -10,9 +10,29 @@ execute:
   warning: false # use this to make sure warnings don't show up
 ---
 
-
-
 [Link to my Github repo](https://github.com/themilamatich/ENVS-193DS_spring-2026_final)
+
+# Set Up 
+```{r}
+#| label: set-up-load-packages-read-in-data
+
+# installing packages needed 
+install.packages("DHARMa")
+
+# loading in packages for final 
+library(tidyverse) # general use
+library(janitor) # 
+library(here) # file organization
+library(MuMIn) # model selection
+library(DHARMa) # cleaning data frames
+library(ggeffects) # getting model predictions
+
+# reading in data and storing as objects 
+nests <- read_csv(here("data","nest_data_final.csv"))
+personal <- read_csv(here("data","personal_data.csv"))
+
+```
+
 
 # Problem 1: Research Writing 
 
@@ -39,6 +59,11 @@ One additional variable that could influence the probability of American Avocet 
 # Problem 2: Data Analysis
 
 ## a. Clean and wrangle 
+```{r}
+#| label: cleaning-and-wrangling-data
+
+
+```
 
 ## b. Response variable 
 
