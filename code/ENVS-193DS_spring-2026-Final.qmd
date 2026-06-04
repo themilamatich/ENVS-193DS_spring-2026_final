@@ -18,9 +18,23 @@ execute:
 
 ## a. Transparent statistical methods
 
+**In part 1, they used a generalized linear model (GLM)** to how distance to water edge predicts the probability of American Avocet microhabitat use. **In part 2, they used a chi-sqaured test** to compare counts between bird species across different habitat sites.
+
 ## b. Suggestions for rewriting
 
+#### Part 1: 
+
+Habitat distance to water edge was a significant predictor of whether or not the shorebird American Avocet used the microhabitat. 
+
+
+#### Part 2: 
+
+Our study shows that the distribution of bird species differed significantly across different habitat types (managed pond, non-tidal marsh, salt pond, tidal marsh, or tidal mudflat). These results suggests that the studies bird species (American Avocet, Forster’s Tern, Black-necked Stilt) use habitats differently, and may prefer some habitats more than others. 
+
+
 ## c. Further analysis
+
+One additional variable that could influence the probability of American Avocet microhabitat use could be seasonality measured across a long time series and keeping track of date (categorical variable) that would be categorically placed into Fall, Spring, Summer or Fall. This factor would influence the habitat use as it influences shorebird migration patterns, which determines whether or not the birds are in the location of study.
 
 # Problem 2: Data Analysis
 
