@@ -10,7 +10,7 @@ execute:
   warning: false # use this to make sure warnings don't show up
 ---
 
-[Link to my Github repo](https://github.com/themilamatich/ENVS-193DS_spring-2026_final)
+[Github repo](https://github.com/themilamatich/ENVS-193DS_spring-2026_final)
 
 # Set Up 
 ```{r}
@@ -24,6 +24,7 @@ library(rstatix) # calculate cohen's d
 library(MuMIn) # model selection
 library(DHARMa) # 
 library(ggeffects) # getting model predictions
+library(ggplot2) # for visualization 
 
 # reading in data and storing as objects 
 nests <- read_csv(here("data","nest_data_final.csv"))
@@ -81,7 +82,7 @@ nests_clean <- nests |>
   # filter to only include: C. mimosae, C. sjostedti, and C. nigriceps
   filter(ant_species %in% c("Crematogaster mimosae", 
                             "Crematogaster sjostedti", 
-                            "Crematogaster   nigriceps")) |> 
+                            "Crematogaster nigriceps")) |> 
   # reordering ant species levels according to instructions
   mutate(ant_species = as_factor(ant_species),
          ant_species = fct_relevel(ant_species,
@@ -102,27 +103,149 @@ The 1s and the 0s in a biological context represents a binary outcome of presenc
 
 ## c. Purpose of study 
 
-One of the predictors is tree height, which is a numerical, continuous variable (measured in cm). As tree height increases, the probability of nest occurrence would increase as it would be further away from ground predators
+One of the predictors is tree height, which is a numerical, continuous variable (measured in cm). As tree height increases, the probability of nest occurrence would increase as it would be further away from ground predators and further from the reach of ants (inferred from the introduction and methods). (ASK SOMEONE ABOUT THIS)
 
-The other predictor is acacia ant species, which is a categorical variable (differentiated by type of ant). ---
-
-** need access to the article to answer**
+The other predictor is acacia ant species, which is a categorical variable (differentiated by type of ant: C. mimosae, C. sjostedti, and C. nigriceps). Because ants are nest predators in acacia trees, it is predicted that the number of nests will be higher in less agressive ant-tree symbionts(C. sjostedti), however, if the acacia ants defend the tree from other nest predators, it is predicted that number of nests will be higher in the more agressive symbionts (C. mimosae and C. nigriceps). This information is found in the third to fourth paragraph in the introduction. 
 
 ## d. Table of models 
 
+| Model number | Ant Species |   Tree Height   | Interaction?                |
+|--------------|:-----------:|:---------------:|:---------------------------:| 
+| 1            |      X      |        X        |      No interaction (+)     | 
+| 2            |      X      |        X        |      Interaction (*)        |
+
+
 ## e. Run the models 
+```{r}
+#| label: running-the-models ? 
+
+# running model 1 (no interaction)
+nest_mod1 <- glm(case_control ~ ant_species + height_cm, # "+" = no interaction
+                 data = nests_clean, # from cleaned data set
+                 family = "binomial") # binomial data set
+
+# running model 2 (interaction)
+nest_mod2 <- glm(case_control ~ ant_species * height_cm, # "*" = no interaction
+                data = nests_clean, # from cleaned data set
+                family = "binomial") # binomial data set
+
+```
 
 ## f. Select the best model 
 
+```{r}
+#| label: using-AIC-to-pick-best-model
+
+# calculating AIC for the two models
+AICc(nest_mod1,
+     nest_mod2) |> 
+  # rearranging output to be in order of lowest to highest AIC value
+  arrange(AICc)
+
+```
+The best model as determined by Akaike’s Information Criterion (AIC) is the model of interaction between tree height and ant species as it has the lower AIC. 
+
 ## g. Check the diagnostics 
+
+```{r}
+#| label: checking-diagnostics-of-model-1
+
+# running diagnostic plots using DHARMa package 
+plot(
+  simulateResiduals(nest_mod2)
+)
+
+```
+There is a uniform distirbution of the data as shown by the QQ residuals plot (the data poinst tightly follow the QQ reference line)
+
+On the residuals vs. predicted plots, there are no clear pattern of data points, and they are randomly scattered across plots, thus there are randomly distirbuted residuals. 
+
 
 ## h. Visualize the models predictions 
 
+### Generating model predictions first 
+```{r}
+#| label: model-predictions 
+
+# generating a prediction object for model 1
+preds <- ggpredict(
+  nest_mod2,
+  terms = c("height_cm [74:598 by = 1]", "ant_species")) |> 
+  # renaming columns so that it makes it easier to build the figure 
+  rename(height_cm = x,
+         ant_species = group)
+```
+
+### Making the Figure 
+```{r}
+#| label: generating-the-figure 
+ ## EDIT THIS 
+
+# base layer: ggplot
+ggplot(data = nests_clean, # data is from cleaned data set 
+       mapping = aes(x = height_cm, # x-axis: tree height
+                     y = case_control)) + # y-axis: nest probability 
+  # first layer: geom points (show underlying daya) 
+  geom_point(mapping = aes(color = ant_species), # color based on species
+             shape = 21) + # shape of points are circles 
+  # second layer: geom_line (based on predictions)
+  geom_line(data = preds, # data from model predictions 
+            mapping = aes(x = height_cm, # x-axis: tree height
+                          y = predicted, # y-axis: predicted probability
+                          color = ant_species), # color based on species
+            linewidth = 1) + # setting line width 
+  # third layer: ribbon (95% confidence interval predictions)
+  geom_ribbon(data = preds, # data from model predictions
+              mapping = aes(x = height_cm, # x-axis: tree height
+                            y = predicted, # y-axis: predicted probability
+                            ymin = conf.low,
+                            ymax = conf.high, 
+                            fill = ant_species), # color based on species
+                        alpha = 0.1) + # opaque points
+  # making a new panel for each species
+  facet_wrap(~ ant_species) + 
+  # adding custom colors based on species for the points/line/ribbon
+  scale_color_manual(values = c(
+    "Crematogaster mimosae" = "#F4C542",
+    "Crematogaster sjostedti" = "rosybrown", 
+    "Crematogaster nigriceps" = "#E2522B"))  +
+  # adding costum colors 
+  scale_fill_manual(values = c(
+    "Crematogaster mimosae" = "#F4C542",
+    "Crematogaster sjostedti" = "rosybrown", 
+    "Crematogaster nigriceps" = "#E2522B")) + 
+  # labeling x and y axis
+  labs(x = "Tree Height (cm)", 
+       y = "Probaility of bird nest occurence") + 
+  # editing theme
+  theme(panel.background = element_rect(fill = "white", # no panel background
+                                      colour = "black", # black outline
+                                      linewidth = 1), # width of outline
+        panel.grid = element_blank(), # getting rid of gridlines
+        axis.ticks = element_line(linewidth = 1), # adding tick marks on axes
+        legend.position = "none") # getting rid of legend
+```
+
 ## i. Write a caption for your figure 
+**Figure 1. Probability of bird nest occurrence differs based on tree height and the present ant species.** Figures are separated by ant species and this is differentiated through distcitive panels and colors, where *C. sjostedti* is brown, *C. mimosae* is yellow, and *C. nigriceps* is red. Open circle points represent individual observations of nest occurrence in each scenario, the line represents model predictions of nest occurrence, and the ribbon represents the 95% confidence interval. Data is from Lujan, Ema et al. 2023. “Symbiotic acacia ants drive nesting behavior by birds in an African savanna.” Biotropica 55:6. doi: 10.1111/btp.13276.
 
 ## j. Calculate model predictions 
 
+```{r}
+#| label: calculating-model-predictions 
+
+# running ggpredict for model predictions 
+ggpredict(nest_mod2, # taking data from model 2
+          terms = c("height_cm [600]", # 1st term = height @ 600cm
+                    "ant_species")) # 2nd term = ant species 
+```
+
 ## k. Interpret your results 
+
+The predicted probability of nest occurrence at the tallest tree height (600 cm) with *C. sjostedti* present is 0.2 (95% CI: [0.00, 0.99]), with *C. mimosae* present is 0.74 (95% CI: [0.48, 0.90]), and *C. nigriceps* present is 1.00 (95% CI: [1.00, 1.00]). According to this predictions and Figure 1, birds preferred to nest in trees infested with *C. mimosae* and *C. nigriceps*, with more nesting on the taller trees with *C. nigriceps*, however height did not seem to influence the nest presence on trees infested with *C. mimosae*. Birds also rarely nested on trees with *C. sjostedti* present, regardless of height.
+
+This selection towards trees inhabited by more aggressive ant species (*C. mimosae* and *C. nigriceps*) as they do not directly attck the nestlings or adult birds and may reduce the risk of predation by vertebrate and invertebrate herbivores. The specific preference toward *C. nigriceps* out of the two aggressive species is that this species is that its presence leads to denser canopies by altering tree shoot structure, which further protects the nests from other predators such as raptors or snakes. 
+
 
 # Problem 3. Affective and exploratory visualizations
 
@@ -255,12 +378,12 @@ ggplot(data = personal_clean,
        y = "Step Count") + # y labeled as "Step Count"
   # changing theme elements
   theme(text = element_text(family = "serif"), # font = serif
-       panel.background = element_rect(fill = "white", # no panel background
+        panel.background = element_rect(fill = "white", # no panel background
                                       colour = "black", # black outline
                                       linewidth = 1), # width of outline
-      panel.grid = element_blank(), # getting rid of gridlines
-      axis.ticks = element_line(linewidth = 1), # adding tick marks on axes
-      legend.position = "none") # getting rid of legend
+        panel.grid = element_blank(), # getting rid of gridlines
+        axis.ticks = element_line(linewidth = 1), # adding tick marks on axes
+        legend.position = "none") # getting rid of legend
 ```
 
 ## e. Write a caption 
