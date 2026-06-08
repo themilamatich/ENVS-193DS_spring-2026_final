@@ -22,9 +22,8 @@ library(janitor) # cleaning data frames
 library(here) # file organization
 library(rstatix) # calculate cohen's d
 library(MuMIn) # model selection
-library(DHARMa) # 
+library(DHARMa) # to simulate residuals 
 library(ggeffects) # getting model predictions
-library(ggplot2) # for visualization 
 
 # reading in data and storing as objects 
 nests <- read_csv(here("data","nest_data_final.csv"))
@@ -106,7 +105,7 @@ The 1s and the 0s in a biological context represents a binary outcome of presenc
 
 ## c. Purpose of study 
 
-One of the predictors is tree height, which is a numerical, continuous variable (measured in cm). As tree height increases, the probability of nest occurrence would increase as it would be further away from ground predators and further from the reach of ants (inferred from the introduction and methods). **
+One of the predictors is tree height, which is a numerical, continuous variable (measured in cm). As tree height increases, the probability of nest occurrence would increase, as determined by the the results section (paragraph 3). This is likely because height can shield the nests from ground predators, however this is dependent on what ant species are present as it can alter the architecture of the tree, as inferred from the discussion (paragraph 2). 
 
 The other predictor is acacia ant species, which is a categorical variable (differentiated by type of ant: C. mimosae, C. sjostedti, and C. nigriceps). Because ants are nest predators in acacia trees, it is predicted that the number of nests will be higher in less aggressive ant-tree symbionts(C. sjostedti), however, if the acacia ants defend the tree from other nest predators, it is predicted that number of nests will be higher in the more aggressive symbionts (C. mimosae and C. nigriceps). This information is found in the third to fourth paragraph in the introduction. 
 
