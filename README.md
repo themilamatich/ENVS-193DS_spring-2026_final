@@ -13,4 +13,4 @@ There is a 'code' folder in which all code for my homework is stored.
 
 ## Rendered output 
 
-The rendered pdf for my Homework 3 is [here](). 
+The rendered pdf for my Homework 3 is [here](https://github.com/themilamatich/ENVS-193DS_spring-2026_final/blob/main/code/ENVS-193DS_spring-2026-Final.pdf). 
