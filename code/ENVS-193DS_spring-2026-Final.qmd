@@ -58,7 +58,7 @@ Our study shows that the distribution of bird species differed significantly acr
 
 ## c. Further analysis
 
-One additional variable that could influence the probability of American Avocet microhabitat use could be seasonality measured across a long time series and keeping track of date (categorical variable) that would be categorically placed into Fall, Spring, Summer or Winter. This factor would influence the habitat use as it influences shorebird migration patterns, which determines whether or not the birds are in the location of study, and therefor keeping track of this data alongside the known migration pattern of each species will help explain why birds may be present (or not present) at different times.
+One additional variable that could influence the probability of American Avocet microhabitat use could be seasonality measured across a long time series (2-3 years) and keeping track of date (categorical variable) that would be categorically placed into Fall, Spring, Summer or Winter. This factor would influence the habitat use as it influences shorebird migration patterns, which determines whether or not the birds are in the location of study, and therefor keeping track of this data alongside the known migration pattern/season of each species will help explain why birds may be present (or not present) at different times.
 
 # Problem 2: Data Analysis
 
@@ -104,7 +104,7 @@ The 1s and the 0s in a biological context represents a binary outcome of presenc
 
 ## c. Purpose of study 
 
-One of the predictors is tree height, which is a numerical, continuous variable (measured in cm). As tree height increases, the probability of nest occurrence would increase, as determined by the the logistic model in the results section (paragraph 3). This is likely because height can shield the nests from ground predators, however the nest presence is also dependent on what ant species are present as it can alter the architecture of the tree (ie. the denser canopy when *C. nigriceps* is present), as inferred from the discussion (paragraph 2). 
+One of the predictors is tree height, which is a numerical, continuous variable (measured in cm). As tree height increases, the probability of nest occurrence would increase, as determined by the the logistic model in the results section (paragraph 2), but it may also have no effect on nest occurrence dependent on what ant species are present (results section, paragraph 3). This is likely because height can shield the nests from ground predators, however the nest presence is also dependent on what ant species are present as it can alter the architecture of the tree (ie. the denser canopy when *C. nigriceps* is present), as inferred from the discussion (paragraph 2). 
 
 The other predictor is acacia ant species, which is a categorical variable (differentiated by type of ant: *C. mimosae*, *C. sjostedti*, and *C. nigriceps*). Because ants are nest predators in acacia trees, it is predicted that the number of nests will be higher in less aggressive ant-tree symbionts (*C. sjostedti*), however, if the acacia ants defend the tree from other nest predators, it is predicted that number of nests will be higher in the more aggressive symbionts (*C. mimosae* and *C. nigriceps*). This information is found in the third to fourth paragraph in the introduction. 
 
@@ -199,8 +199,8 @@ ggplot(data = nests_clean, # data is from cleaned data set
   geom_ribbon(data = preds, # data from model predictions
               mapping = aes(x = height_cm, # x-axis: tree height
                             y = predicted, # y-axis: predicted probability
-                            ymin = conf.low,
-                            ymax = conf.high, 
+                            ymin = conf.low, # 95% CI (min)
+                            ymax = conf.high, # 95% CI (max)
                             fill = ant_species), # color based on species
                         alpha = 0.1) + # opaque points
   # making a new panel for each species
@@ -220,15 +220,15 @@ ggplot(data = nests_clean, # data is from cleaned data set
        y = "Probability of bird nest occurrence") + 
   # editing theme
   theme(panel.background = element_rect(fill = "white", # no panel background
-                                      colour = "black", # black outline
-                                      linewidth = 1), # width of outline
+                                        colour = "black", # black outline
+                                        linewidth = 1), # width of outline
         panel.grid = element_blank(), # getting rid of gridlines
         axis.ticks = element_line(linewidth = 1), # adding tick marks on axes
         legend.position = "none") # getting rid of legend
 ```
 
 ## i. Write a caption for your figure 
-**Figure 1. Probability of bird nest occurrence differs based on tree height and the present ant species.** Figures are separated by ant species and this is differentiated through distcitive panels and colors, where *C. sjostedti* is brown, *C. mimosae* is yellow, and *C. nigriceps* is red. Open circle points represent individual observations of nest occurrence in each scenario, the line represents model predictions of nest occurrence given tree height (cm) and ant species, and the ribbon represents the 95% confidence interval. Data originally from Lujan, Ema et al. 2023. “Symbiotic acacia ants drive nesting behavior by birds in an African savanna.” Biotropica 55:6. doi: 10.1111/btp.13276.
+**Figure 1. Probability of bird nest occurrence differs based on the present ant species and tree height.** Figures are separated by ant species and this is differentiated through distinctive panels and colors, where *C. sjostedti* is rose-brown, *C. mimosae* is yellow, and *C. nigriceps* is red. Open circle points represent individual observations of nest occurrence in each scenario, the line represents model predictions of nest occurrence given tree height (cm) and ant species, and the ribbon represents the 95% confidence interval. Data originally from Lujan, Ema et al. 2023. “Symbiotic acacia ants drive nesting behavior by birds in an African savanna.” Biotropica 55:6. doi: 10.1111/btp.13276.
 
 ## j. Calculate model predictions 
 
@@ -243,28 +243,28 @@ ggpredict(nest_mod2, # taking data from interaction model (2)
 
 ## k. Interpret your results 
 
-The predicted probability of nest occurrence at the tallest tree height (600 cm) with *C. sjostedti* present is 0.2 (95% CI: [0.00, 0.99]), with *C. mimosae* present is 0.74 (95% CI: [0.48, 0.90]), and *C. nigriceps* present is 1.00 (95% CI: [1.00, 1.00]). According to these predictions and Figure 1, birds preferred to nest in trees inhabited by *C. mimosae* and *C. nigriceps*, with more nesting on the taller trees with both of these species, however this interaction is more distinctive with trees inhabited by *C. nigriceps*. Birds also rarely nested on trees with *C. sjostedti* present, regardless of height. 
+The predicted probability of nest occurrence at the tallest tree height (600 cm) with *C. sjostedti* present is 0.2 (95% CI: [0.00, 0.99]), with *C. mimosae* present is 0.74 (95% CI: [0.48, 0.90]), and *C. nigriceps* present is 1.00 (95% CI: [1.00, 1.00]). According to these predictions and Figure 1, birds preferred to nest in trees inhabited by *C. mimosae* and *C. nigriceps*, with more nesting on the taller trees with both of these species present, however this interaction is more distinctive with trees inhabited by *C. nigriceps*. Birds also rarely nested on trees with *C. sjostedti* present, regardless of height. 
 
-Birds have a selection preference towards trees inhabited by more aggressive ant species (*C. mimosae* and *C. nigriceps*) as they do not directly attack the nestlings or adult birds and may reduce the risk of predation by vertebrate and invertebrate herbivores. The specific preference toward *C. nigriceps* out of the two aggressive species is due to that fact that when this species is present, it alters the trees shoot structure leading to denser canopies, which further protects the nests from other predators such as raptors or snakes. 
+Birds have a selection preference towards trees inhabited by more aggressive ant species (*C. mimosae* and *C. nigriceps*) as they do not directly attack the nestlings or adult birds and may reduce the risk of predation by vertebrate and invertebrate herbivores. The specific preference toward *C. nigriceps* out of the two aggressive species is due to that fact that when this species is present, it alters the tree's shoot structure leading to denser canopies, which further protects the nests from other predators such as raptors or snakes. 
 
 
 # Problem 3. Affective and exploratory visualizations
 
 ## a. Comparing visualizations
 
-- My affective visualizations differ greatly from my exploratory visualization in Homework 2 as it represents my data in a different way. Instead of using a linear model or a box plot, I use a bar graph diagram in order to show my step count on each given day. It also shows how my data fluctuates through time as each bar represents one day, while the visualizations in homework 2 do not differentiate each day on a linear time scale (they are just represented by points). Additionally, instead of continuing to explore temperature as a predictor variable, I chose to do amount of homework as I felt like it would be easiest to visualize. 
+- My affective visualization differed greatly from my exploratory visualization in Homework 2 as it represented my data in a different way. Instead of using a linear model or a box plot, I use a bar graph diagram in order to show my step count on each given day. It also shows how my data fluctuates through time as each bar represents one day, while the visualizations in homework 2 do not differentiate each day on a linear time scale (they are just represented by points). Additionally, instead of continuing to explore temperature as a predictor variable, I chose to do amount of homework as I felt like it would be easiest to visualize given it being a categorical variable I could assign colors to. 
 
 - They are similar in that both visualizations show each individual data point, where this is through points in both of my graphs from Homework 2, and done by bars in my affective visualization. 
 
 - Some patterns that I see is that step count was higher visually on weekends compared to weekdays (as shown by the median bar on the boxplot and the height of the outlined bars in my affective visualization). Additionally, like how temperature affected my step count, there seems to not be a pattern in homework levels and step count. 
 
-- I got a lot of feedback for my color scheme and also for my artist statement. I was told that my color scheme was misleading because while brown represented the "medium" amount of homework, it stood at the most and should have represented the "high" amount of homework, and that I should stick to a classic high, medium, low color scheme with red purple and blue, or keep it monochromatic with different shades. That being said, I changed my colors to be gray, yellow, and red to show low, medium, high as it makes more sense visually and intuitively. I also got feedback on my artist statement to include more information about what my piece is showing and why, which I ended up including. 
+- I got a lot of feedback for my color scheme and also for my artist statement. I was told that my color scheme was misleading because while brown represented the "medium" amount of homework, it stood out the most and should have represented the "high" amount of homework, and that I should stick to a classic high, medium, low color scheme with red purple and blue, or keep it monochromatic with different shades. That being said, I changed my colors to be gray, yellow, and red (more monochromatic) to show low, medium, high as it makes more sense visually and intuitively. I also got feedback on my artist statement to include more information about what my piece is showing and why, which I ended up including. 
 
 ## b. Designing an analysis
 
 The main question that I was asking, regardless of the other variables I measured, was how my step count differed between the days that I had class and days that I did not (ie. weekday vs. weekend). That being said, my predictor variable would be day of the week, as a binary, categorical variable (weekday vs. weekend) and my response variable would be step count, which is a discrete numerical variable. 
 
-An analysis I could run to answer this question would be Two-Sample T-test, however the specific type of test depends on whether my data is normal and variances are equal (Student's if variances are equal and data is normally distributed, Welch's if variances are not equal but data is normally distributed, and Mann Whitney U if data are not normally distributed). This test makes sense as it will compare my average (or median) step count across the weekdays and the weekends, which is two groups of data. It also make sense because my predictor variable is categorical, and I want to compare step count across two groups and see how they differ. 
+An analysis I could run to answer this question would be Two-Sample T-test, however the specific type of test depends on whether my data is normal and variances are equal (Student's if variances are equal and data is normally distributed, Welch's if variances are not equal but data is normally distributed, and Mann Whitney U if data are not normally distributed). This test makes sense as it will compare my average (or median) step count across the weekdays and the weekends, which are two groups of data. It also make sense because my predictor variable is categorical, and I want to compare step count across two groups (weekday/weekend) and see how they differ. 
 
 ## c. Check any assumptions and run your analysis
 
@@ -304,11 +304,11 @@ We determined that group variances are equal (F-test, F(28, 11) = 0.521 p = 0.17
 
 ### Running Analysis 
 
-#### Student's T-Test 
+#### Two-Sample T-Test (Student's)
 ```{r}
 #| label: running-a-t-test
 
-# running a Student's t-test using results from normality & variance test 
+# running a Student's t-test due to results from normality & variance test 
 t.test(
   # formula: response variable ~ grouping variable
   step_count ~ weekday_or_weekend, 
@@ -346,18 +346,18 @@ personal_summary <- personal_clean |>
             sd = sd(step_count)) # calculating standard deviation
 ```
 
-### Generating Jitter Plot for T-Test 
+### Generating Jitter Plot for Comparing Means
 ```{r}
 #| label: making-a-jitter 
 # base layer: ggplot
-ggplot(data = personal_clean,
+ggplot(data = personal_clean, # data = cleaned data set 
        mapping = aes(x = weekday_or_weekend, # x-axis = weekday/weekend
                      y = step_count,# y-axis = step count
                      color = weekday_or_weekend)) + # assigning colors
   # first layer: adding underlying data (individual observations)
   geom_jitter(width = 0.1, # narrow jitter width
               height = 0, # no vertical jitter/point movement along the y-axis
-              alpha = 0.5, # transparent points to be visually distinct
+              alpha = 0.75, # transparent points to be visually distinct
               shape = 21) + # open circle points
   # second layer: adding point for the mean
   geom_point(data = personal_summary, # data from summary
@@ -366,7 +366,7 @@ ggplot(data = personal_clean,
              size = 2) + # adjusting point size
   # third layer: adding error bars to show variation
   geom_errorbar(data = personal_summary, # data from summary
-                mapping = aes(x = weekday_or_weekend, # x-axis = weekday/weekend
+                mapping = aes(x = weekday_or_weekend, # x-axis = weekday/end
                               y = mean, # y-axis = mean
                               ymin = mean - sd, # min y-value on error bar
                               ymax = mean + sd), # max y-value on error bar
@@ -377,7 +377,7 @@ ggplot(data = personal_clean,
   # labeling x and y axis
   labs(x = "Weekday or Weekend", # x labeled as "Weekday or Weekend"
        y = "Step Count") + # y labeled as "Step Count"
-  # changing theme elements
+  # changing theme elements to differ from default
   theme(text = element_text(family = "serif"), # font = serif
         panel.background = element_rect(fill = "white", # no panel background
                                       colour = "black", # black outline
@@ -388,10 +388,10 @@ ggplot(data = personal_clean,
 ```
 
 ## e. Write a caption 
-**Figure 2. Number of steps taken differs on weekday versus weekend.** Small circular points represent the total number of steps recorded on a given weekday (yellow points) or weekend (blue points) from 2026-04-21 to 2026-05-30. The average step count is shown by the solid dot, while the error bars represent the standard deviation of the data to show the variability within the weekdays or weekends. Data collected by Mila Matich from 2026-04-21 to 2026-05-30.
+**Figure 2. Number of steps taken differs on weekday versus weekend.** Small open-circular points represent the total number of steps recorded on a given weekday (yellow points) or weekend (blue points) from 2026-04-21 to 2026-05-30. The average step count for each weekday (yellow) and weekend (blue) is shown by the solid dot, while the error bars represent the standard deviation of the data to show the variability within the weekdays or weekends. Data collected by Mila Matich from 2026-04-21 to 2026-05-30.
 
 ## f. Write about your results 
-My results suggest that my step count was greater on weekends (mean = 13,111.91 steps) than weekdays (mean = 9,506.83 steps). I found a large negative effect (Cohen's d = -0.927) of day-type on mean step count between the weekdays (n = 29) and weekends (n = 11) (Student's t-test, t(38) = -2.8381, p = 0.007245, $\alpha$ = 0.05). 
+My results suggest that, on average, my step count was greater on weekends (n = 11, mean = 13,112 steps) than weekdays (n = 29, mean = 9,507 steps). I found a large negative effect (Cohen's d = -0.927) of day-type on mean step count between the weekdays and weekends (Student's t-test, t(38) = -2.8381, p = 0.007245, $\alpha$ = 0.05). 
 
 ## g. Sharing your affective visualization 
 
