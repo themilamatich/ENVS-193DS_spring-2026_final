@@ -49,6 +49,7 @@ personal_clean <- personal |>
 
 #### Part 1: 
 
+Habitat distance to water edge significantly influenced the likelihood of whether or not the shorebird American Avocet used the microhabitat.
 
 #### Part 2: 
 
