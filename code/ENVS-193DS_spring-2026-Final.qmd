@@ -1,5 +1,5 @@
 ---
-title: "ENVS-193DS-spring2026-Final"
+title: "ENVS 193DS Final"
 author: "Mila Matich"
 date: "2026-06-09"
 format:
@@ -49,7 +49,6 @@ personal_clean <- personal |>
 
 #### Part 1: 
 
-Habitat distance to water edge significantly influenced the likelihood of whether or not the shorebird American Avocet used the microhabitat. 
 
 #### Part 2: 
 
@@ -104,7 +103,7 @@ The 1s and the 0s in a biological context represents a binary outcome of presenc
 
 ## c. Purpose of study 
 
-One of the predictors is tree height, which is a numerical, continuous variable (measured in cm). As tree height increases, the probability of nest occurrence would increase, as determined by the the logistic model in the results section (paragraph 3), however the results also suggest that there is no relationship between height and nest probability (results section paragraph 3). This is likely because height can shield the nests from ground predators, however this is dependent on what ant species are present as it can alter the architecture of the tree (ie. the denser canopy when *C. nigriceps* is present), as inferred from the discussion (paragraph 2). 
+One of the predictors is tree height, which is a numerical, continuous variable (measured in cm). As tree height increases, the probability of nest occurrence would increase, as determined by the the logistic model in the results section (paragraph 3). This is likely because height can shield the nests from ground predators, however the nest presence is also dependent on what ant species are present as it can alter the architecture of the tree (ie. the denser canopy when *C. nigriceps* is present), as inferred from the discussion (paragraph 2). 
 
 The other predictor is acacia ant species, which is a categorical variable (differentiated by type of ant: *C. mimosae*, *C. sjostedti*, and *C. nigriceps*). Because ants are nest predators in acacia trees, it is predicted that the number of nests will be higher in less aggressive ant-tree symbionts (*C. sjostedti*), however, if the acacia ants defend the tree from other nest predators, it is predicted that number of nests will be higher in the more aggressive symbionts (*C. mimosae* and *C. nigriceps*). This information is found in the third to fourth paragraph in the introduction. 
 
@@ -153,13 +152,13 @@ The best model for predicting the probability of bird nest presence as determine
 #| fig-height: 8
 #| fig-width: 12
 
-# running diagnostic plots using stimulated residuals from DHARMa package 
+# running diagnostic plots using simulated residuals from DHARMa package 
 plot(
   simulateResiduals(nest_mod2) # using interaction model (2) 
 )
 
 ```
-There is a uniform distribution of the data as shown by the QQ residuals plot (the data points tightly follow the QQ reference line). On the residuals vs. predicted plots, there are no clear pattern of data points, and they are randomly scattered across plots, thus there are randomly distributed residuals. In ocnclusion, the assumptions to use a generalized linear model are met. 
+There is a uniform distribution of the data as shown by the QQ residuals plot (the data points tightly follow the QQ reference line). On the residuals vs. predicted plots, there are no clear pattern of data points, and they are randomly scattered across plots, thus there are randomly distributed residuals. In conclusion, the assumptions to use a generalized linear model are met. 
 
 
 ## h. Visualize the models predictions 
@@ -245,7 +244,7 @@ ggpredict(nest_mod2, # taking data from interaction model (2)
 
 The predicted probability of nest occurrence at the tallest tree height (600 cm) with *C. sjostedti* present is 0.2 (95% CI: [0.00, 0.99]), with *C. mimosae* present is 0.74 (95% CI: [0.48, 0.90]), and *C. nigriceps* present is 1.00 (95% CI: [1.00, 1.00]). According to these predictions and Figure 1, birds preferred to nest in trees inhabited by *C. mimosae* and *C. nigriceps*, with more nesting on the taller trees with both of these species, however this interaction is more distinctive with trees inhabited by *C. nigriceps*. Birds also rarely nested on trees with *C. sjostedti* present, regardless of height. 
 
-Birds have a selection preference towards trees inhabited by more aggressive ant species (*C. mimosae* and *C. nigriceps*) as they do not directly attack the nestlings or adult birds and may reduce the risk of predation by vertebrate and invertebrate herbivores. The specific preference toward *C. nigriceps* out of the two aggressive species is due to tha fact that when this species it present, it alters the trees shoot structure leading to denser canopies, which further protects the nests from other predators such as raptors or snakes. 
+Birds have a selection preference towards trees inhabited by more aggressive ant species (*C. mimosae* and *C. nigriceps*) as they do not directly attack the nestlings or adult birds and may reduce the risk of predation by vertebrate and invertebrate herbivores. The specific preference toward *C. nigriceps* out of the two aggressive species is due to that fact that when this species is present, it alters the trees shoot structure leading to denser canopies, which further protects the nests from other predators such as raptors or snakes. 
 
 
 # Problem 3. Affective and exploratory visualizations
@@ -336,7 +335,7 @@ cohens_d(step_count ~ weekday_or_weekend,
 ```{r}
 #| label: summary-stats
 
-# creating a new object called urchins_summary to calculate values
+# creating a new object called personal_summary to calculate values
 personal_summary <- personal_clean |>
   # group by weekday or weekend
   group_by(weekday_or_weekend) |>
