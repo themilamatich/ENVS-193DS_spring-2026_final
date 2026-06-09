@@ -3,7 +3,7 @@ This is a repo for my ENVS 193DS final.
 
 ## General Information 
 
-This repo is for my ENVS 193DS Final submission. It provides examples of editing scientific communication, working with generalized linear models (visualizing predictions and analysis), and using statistical tests to analyze personal data. 
+This repo is for my ENVS 193DS Final submission. It provides examples of editing and refining scientific communication and interpretation, working with generalized linear models (visualizing predictions and analysis with a real world data set), and using statistical tests to analyze personal data. 
 
 ## Data and file overview
 

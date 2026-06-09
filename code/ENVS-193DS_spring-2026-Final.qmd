@@ -49,7 +49,7 @@ personal_clean <- personal |>
 
 #### Part 1: 
 
-Habitat distance to water edge was a significant predictor of whether or not the shorebird American Avocet used the microhabitat. 
+Habitat distance to water edge significantly influenced the likelihood of whether or not the shorebird American Avocet used the microhabitat. 
 
 #### Part 2: 
 
@@ -58,7 +58,7 @@ Our study shows that the distribution of bird species differed significantly acr
 
 ## c. Further analysis
 
-One additional variable that could influence the probability of American Avocet microhabitat use could be seasonality measured across a long time series and keeping track of date (categorical variable) that would be categorically placed into Fall, Spring, Summer or Winter. This factor would influence the habitat use as it influences shorebird migration patterns, which determines whether or not the birds are in the location of study, and therefor keeping track of this data alongside the known migration pattern of each species will help explain why birds may be present at different times.
+One additional variable that could influence the probability of American Avocet microhabitat use could be seasonality measured across a long time series and keeping track of date (categorical variable) that would be categorically placed into Fall, Spring, Summer or Winter. This factor would influence the habitat use as it influences shorebird migration patterns, which determines whether or not the birds are in the location of study, and therefor keeping track of this data alongside the known migration pattern of each species will help explain why birds may be present (or not present) at different times.
 
 # Problem 2: Data Analysis
 
@@ -100,20 +100,20 @@ slice_sample(nests_clean, n = 10)
 
 ## b. Response variable 
 
-The 1s and the 0s in a biological context represents a binary outcome of presence (1) or not present (0). In this specific study, a 1 represents a tree with a nest and 0 represents a tree with no nests. 
+The 1s and the 0s in a biological context represents a binary outcome of presence (1) or not present (0). In this specific study, a 1 represents a tree with a bird nest and 0 represents a tree with no bird nests. 
 
 ## c. Purpose of study 
 
-One of the predictors is tree height, which is a numerical, continuous variable (measured in cm). As tree height increases, the probability of nest occurrence would increase, as determined by the the logistic model in the results section (paragraph 3), however the results also suggest that there is no relationship between height and nest probability (paragraph 3). This is likely because height can shield the nests from ground predators, however this is dependent on what ant species are present as it can alter the architecture of the tree (ie. the denser canopy when *C. nigriceps* is present), as inferred from the discussion (paragraph 2). 
+One of the predictors is tree height, which is a numerical, continuous variable (measured in cm). As tree height increases, the probability of nest occurrence would increase, as determined by the the logistic model in the results section (paragraph 3), however the results also suggest that there is no relationship between height and nest probability (results section paragraph 3). This is likely because height can shield the nests from ground predators, however this is dependent on what ant species are present as it can alter the architecture of the tree (ie. the denser canopy when *C. nigriceps* is present), as inferred from the discussion (paragraph 2). 
 
 The other predictor is acacia ant species, which is a categorical variable (differentiated by type of ant: *C. mimosae*, *C. sjostedti*, and *C. nigriceps*). Because ants are nest predators in acacia trees, it is predicted that the number of nests will be higher in less aggressive ant-tree symbionts (*C. sjostedti*), however, if the acacia ants defend the tree from other nest predators, it is predicted that number of nests will be higher in the more aggressive symbionts (*C. mimosae* and *C. nigriceps*). This information is found in the third to fourth paragraph in the introduction. 
 
 ## d. Table of models 
 
-| Model number | Ant Species |   Tree Height   | Interaction?                |
-|--------------|:-----------:|:---------------:|:---------------------------:| 
-| 1            |      X      |        X        |      No interaction (+)     | 
-| 2            |      X      |        X        |      Interaction (*)        |
+| Model number | Ant Species |   Tree Height   |      Model Description       |
+|--------------|:-----------:|:---------------:|:----------------------------:| 
+| 1            |      X      |        X        |Both terms w/o interaction (+)| 
+| 2            |      X      |        X        |Both terms w/ interaction (*) |
 
 
 ## e. Run the models 
